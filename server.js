@@ -1,37 +1,41 @@
 import express from "express";
-import mongoose from "mongoose";
-import dotenv from "dotenv";
 import cors from "cors";
+import dotenv from "dotenv";
+import mongoose from "mongoose";
 import couponRoutes from "./routes/couponRoutes.js";
-import userRoutes from "./routes/userRoutes.js";
 
 dotenv.config();
 
 const app = express();
 
-// ✅ CORS setup to allow frontend to access backend
-const corsOptions = {
-  origin: ["https://https://react-git-main-gurus-projects-d757589a.vercel.app/.vercel.app"], // your frontend URL
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true,
-};
-app.use(cors(corsOptions));
+// ✅ CORS Setup
+app.use(
+  cors({
+    origin: "http://localhost:5173", // Allow frontend origin
+    credentials: true, // Optional: if you're using cookies or auth
+  })
+);
 
 app.use(express.json());
 
-// ✅ Connect MongoDB
-mongoose.connect(process.env.MONGO_URI, {
-  dbName: "testDB",
-})
+// ✅ MongoDB Connection
+mongoose
+  .connect(process.env.MONGO_URI, {
+    dbName: "testDB", // or your DB name
+  })
   .then(() => console.log("✅ MongoDB connected"))
-  .catch((err) => console.error("❌ MongoDB connection failed:", err.message));
+  .catch((err) => console.error("❌ MongoDB connection failed:", err));
 
-console.log("Connecting to:", process.env.MONGO_URI);
+// ✅ API Routes
 
-// ✅ Routes
-app.use("/api", couponRoutes);
-app.use("/api", userRoutes);
+app.use("/api/coupons", couponRoutes);
 
-// ✅ Use process.env.PORT for Render compatibility
+// ✅ Health Check
+app.get("/", (req, res) => {
+  res.send("🚀 Backend is running");
+});
+
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+});

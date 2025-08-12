@@ -4,20 +4,20 @@ import Coupon from "../models/coupon.js";
 const router = express.Router();
 
 // Get all coupons
-router.get("/coupons", async (req, res) => {
+router.get("/", async (req, res) => {
   const data = await Coupon.find();
   res.json(data);
 });
 
 // Create a coupon
-router.post("/coupons", async (req, res) => {
+router.post("/", async (req, res) => {
   const newCoupon = new Coupon(req.body);
   await newCoupon.save();
   res.status(201).json(newCoupon);
 });
 
 // DELETE /api/coupons/:id
-router.delete('/coupons/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
   const { id } = req.params;
   try {
     await Coupon.findByIdAndDelete(id);
@@ -29,7 +29,7 @@ router.delete('/coupons/:id', async (req, res) => {
 });
 
 // GET a single coupon by ID
-router.get('/coupons/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     const coupon = await Coupon.findById(req.params.id);
     if (!coupon) {
@@ -45,7 +45,7 @@ router.get('/coupons/:id', async (req, res) => {
 
 
 // Update coupon
-router.put("/coupons/:id", async (req, res) => {
+router.put("/:id", async (req, res) => {
   try {
     const updated = await Coupon.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!updated) return res.status(404).json({ message: "Coupon not found" });
