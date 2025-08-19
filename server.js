@@ -20,7 +20,7 @@ app.use(express.json());
 
 // ✅ MongoDB Connection
 mongoose
-  .connect(process.env.MONGO_URI, {
+  .connect(process.env.MONGO_URI || "mongodb+srv://mongoguru:guru@cluster0.xh9qpgp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", {
     dbName: "testDB", // or your DB name
   })
   .then(() => console.log("✅ MongoDB connected"))
