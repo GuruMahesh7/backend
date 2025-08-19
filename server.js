@@ -11,7 +11,7 @@ const app = express();
 // ✅ CORS Setup
 app.use(
   cors({
-    origin: "https://backend-1-9gjf.onrender.com", // Allow frontend origin
+    origin: "https://react-kft3.vercel.app/", // Allow frontend origin
     credentials: true, // Optional: if you're using cookies or auth
   })
 );
