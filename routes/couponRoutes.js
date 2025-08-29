@@ -21,6 +21,7 @@ router.get("/users/:id", async (req, res) => {
     _id: user._id,
     name: user.name,
     email: user.email,
+    redeemedAt: user.createdAt,
   }));
   res.json(userData);
 });
