@@ -26,7 +26,7 @@ router.get("/users/:id", async (req, res) => {
 });
 
 // Create a coupon
-router.post("/", async (req, res) => {
+router.post("/createcoupon", async (req, res) => {
   const newCoupon = new Coupon(req.body);
   await newCoupon.save();
   res.status(201).json(newCoupon);
